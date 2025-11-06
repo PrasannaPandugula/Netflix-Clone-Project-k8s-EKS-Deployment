@@ -6,6 +6,8 @@ terraform {
       version = "6.19.0"
     }
   }
+
+  cloud {}
 }
 
 provider "aws" {
