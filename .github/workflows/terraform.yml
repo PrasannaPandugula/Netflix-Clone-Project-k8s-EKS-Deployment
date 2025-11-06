@@ -1,0 +1,66 @@
+name: Infrastructure configuration using Terraform on aws
+
+on: 
+  workflow_dispatch: 
+    inputs:
+        actions:
+            description: "Select terraform actions to run"
+            required: true
+            default: "plan"
+            type: choice
+            options:
+                - init
+                - plan
+                - apply
+env: 
+  TF_API_TOKEN: $TF_API_TOKEN
+  TF_WORKSPACE: $TF_WORKSPACE
+  TF_CLOUD_ORGANIZATION: $TF_CLOUD_ORGANIZATION
+permissions:
+    contents: read
+
+jobs:
+  infrastructure-setup-using-terraform:
+    name: Terraform ${{ github.event.inputs.actions }}
+    runs-on: ubuntu-24.04
+    environment: production
+
+    defaults: 
+      run:
+        shell: bash
+        working-directory: Terraform
+    
+    steps: 
+      - name: checkout repository 
+        uses: actions/checkout@v5
+      
+      - name: Setting Up the Terraform
+        uses: hasicorp/setup-terraform@v3
+        with:
+          path: |    #using actions cache to avoid installing multiple dependencies 
+            ~/.terraform.d/plugin-cache
+            .terraform
+          key: ${{ runner.os }}-terraform-${{ hashFiles('**/*.tf') }}
+          restore-keys: |
+            ${{ runner.os }}-terraform-
+    
+      - name: Initialising the Terraform
+        run: terraform init
+
+      - name: Terraform fomat check
+        run: terraform fmt -check --diff
+
+      - name: Terraform validate 
+        run: terraform validate 
+
+      - name: Terraform plan
+        if: ${{ github.event.inputs.actions == 'plan' }}
+        run: terraform plan -input = false
+
+      - name: Terraform apply 
+        if: ${{ github.event.inputs.actions == 'apply' }}
+        run: terraform apply -auto-approve
+
+      - name: Terraform destory 
+        if: ${{ github.event.inputs.actions == 'destory' }}
+        run: terraform destory -auto-approve
