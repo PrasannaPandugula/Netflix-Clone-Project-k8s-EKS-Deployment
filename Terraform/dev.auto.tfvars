@@ -1,5 +1,5 @@
-aws-region = eu-north-1
-env        = dev
+aws-region = "eu-north-1"
+env        = "dev"
 cidr-block = "10.0.0.0/16"
 #pub-subnet-count=4
 pub-cidr-block = {
