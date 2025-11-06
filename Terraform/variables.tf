@@ -1,8 +1,6 @@
 variable "aws-region" {}
 variable "cidr-block" {}
 variable "env" {}
-variable "pub-subnet-count" {
-}
 
 variable "pub-cidr-block" {
   type = map(object({
