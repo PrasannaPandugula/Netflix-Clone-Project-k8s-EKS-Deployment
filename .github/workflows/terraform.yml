@@ -9,9 +9,9 @@ on:
             default: "plan"
             type: choice
             options:
-                - init
                 - plan
                 - apply
+                - destory
 env: 
   TF_API_TOKEN: $TF_API_TOKEN
   TF_WORKSPACE: $TF_WORKSPACE
