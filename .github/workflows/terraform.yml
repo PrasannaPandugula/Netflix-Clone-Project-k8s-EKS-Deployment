@@ -37,7 +37,7 @@ jobs:
       - name: Setting Up the Terraform
         uses: hasicorp/setup-terraform@v3
         with:
-          path: |    #using actions cache to avoid installing multiple dependencies 
+          path: |    #using actions cache to avoid installing multiple dependencies   
             ~/.terraform.d/plugin-cache
             .terraform
           key: ${{ runner.os }}-terraform-${{ hashFiles('**/*.tf') }}
