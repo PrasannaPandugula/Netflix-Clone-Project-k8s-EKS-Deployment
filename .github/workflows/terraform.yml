@@ -55,7 +55,7 @@ jobs:
 
       - name: Terraform plan
         if: ${{ github.event.inputs.actions == 'plan' }}
-        run: terraform plan -input = false
+        run: terraform plan -input=false
 
       - name: Terraform apply 
         if: ${{ github.event.inputs.actions == 'apply' }}
