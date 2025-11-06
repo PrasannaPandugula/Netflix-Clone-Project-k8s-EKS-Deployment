@@ -35,7 +35,7 @@ jobs:
         uses: actions/checkout@v5
       
       - name: Setting Up the Terraform
-        uses: hasicorp/setup-terraform@v3
+        uses: hashicorp/setup-terraform@v3
         with:
           path: |    #using actions cache to avoid installing multiple dependencies   
             ~/.terraform.d/plugin-cache
