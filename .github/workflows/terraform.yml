@@ -12,14 +12,11 @@ on:
                 - plan
                 - apply
                 - destory
-
-
 jobs:
   infrastructure-setup-using-terraform:
     name: Terraform ${{ github.event.inputs.actions }}
     runs-on: ubuntu-24.04
     env: 
-      TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
       TF_WORKSPACE: ${{ secrets.TF_WORKSPACE }} 
       TF_CLOUD_ORGANIZATION: ${{ secrets.TF_CLOUD_ORGANIZATION }}
     permissions:
@@ -34,6 +31,11 @@ jobs:
     steps: 
       - name: checkout repository 
         uses: actions/checkout@v5
+
+      - name: Setup Terraform cloud credentials
+        run: |
+          mkdir -p ~/.terraform.d
+          echo '{"credentials": {"app.terraform.io": {"token": "'"${{ secrets.TF_API_TOKEN }}"'"}}}' > ~/.terraform.d/credentials.tfrc.json
       
       - name: Setting Up the Terraform
         uses: hashicorp/setup-terraform@v3
