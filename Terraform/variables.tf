@@ -10,7 +10,10 @@ variable "pub-cidr-block" {
 }
 
 variable "ec2-instances" {
-  type = map(string)
+  type = map(object({
+    type = string 
+    subnet = string
+  }))
 }
 variable "ec2_volume_size" {}
 variable "ec2_volume_type" {}
