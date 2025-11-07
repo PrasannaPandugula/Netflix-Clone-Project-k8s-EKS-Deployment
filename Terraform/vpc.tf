@@ -1,8 +1,7 @@
 locals {
   org     = "prasanna"
-  project = "netflix clone"
+  project = "netflix-clone"
   env     = var.env
-
 }
 
 resource "aws_vpc" "vpc" {
@@ -43,7 +42,7 @@ resource "aws_subnet" "public_subnet" {
     Env  = "${local.env}"
   }
 
-  depends_on = [aws_subnet.public_subnet]
+  # depends_on = [aws_subnet.public_subnet]
 }
 
 # route table 
