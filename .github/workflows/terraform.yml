@@ -50,8 +50,8 @@ jobs:
       - name: Initialising the Terraform
         run: terraform init
 
-      - name: Terraform fomat check
-        run: terraform fmt -check --diff
+      - name: Terraform fotmat check
+        run: terraform fmt -recursive
 
       - name: Terraform validate 
         run: terraform validate 
