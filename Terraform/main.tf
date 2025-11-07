@@ -2,8 +2,8 @@
 resource "aws_instance" "ec2" {
   for_each = var.ec2-instances
 
-  ami                  = data.aws_ami.ubuntu
-  subnet_id            = aws_subnet.public_subnet[each.value.subnet]
+  ami                  = data.aws_ami.ubuntu.id
+  subnet_id            = aws_subnet.public_subnet[each.value.subnet].id
   instance_type        = each.value.type
   iam_instance_profile = aws_iam_instance_profile.iam_instance_profile.name
 
