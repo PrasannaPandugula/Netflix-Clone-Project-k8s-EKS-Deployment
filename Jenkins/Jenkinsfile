@@ -1,0 +1,53 @@
+pipeline{
+    agent any
+    tools{
+        nodejs 'nodejs'
+    }
+    
+    environment {
+        SCANNER_HOME=tool 'sonar-server'
+    }
+
+    stages{
+        stage("workspace cleaning") {
+            steps{
+                cleanWs()
+            }
+        }
+
+        stage("check out source code") {
+            steps{
+                git branch: 'master', url: 'https://github.com/PrasannaPandugula/Netflix-Clone-Project-k8s-EKS-Deployment.git'
+            }
+        }
+
+        stage("install dependencies"){
+            steps{
+                dir('Application-Code'){
+                    sh 'npm install'
+                }
+            }
+        }
+
+        stage("SonarQube analysis"){
+            steps{
+                dir('Application-Code'){
+                    withSonarQubeEnv('sonar-server') {
+                        // Run SonarQube scanner using npx (no global install)
+                        sh ''' 
+                        echo "starting sonar qube server"
+                        npx @sonar/scan \
+                        -Dsonar.projectKey=Netfix-Clone \
+                        -Dsonar.projectName=Netfix-Clone \
+                        -Dsonar.sources=src \
+                        -Dsonar.language=js \
+                        -Dsonar.exclusions=dist/**,node_modules/**,public/** \
+                        -Dsonr.host.url=$SONAR_HOST_URL \
+                        -Dsonar.login=$SONAR_AUTH_TOKEN
+                        '''
+                    }
+                }
+            }
+        }
+    }
+}
