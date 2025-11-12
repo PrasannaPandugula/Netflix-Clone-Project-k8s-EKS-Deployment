@@ -78,8 +78,38 @@ pipeline{
         stage("Docker image build") {
             steps {
                 dir('Application-Code') {
-                    withDockerRegistry(credentialsId: 'docker', toolName: 'docker')
+                    script {
+                        withDockerRegistry(credentialsId: 'docker', toolName: 'docker') {
+                            withCredentials([string(credentialsId: 'tmdb-api', variable: 'TMDB_API_KEY')]) {
+                                sh """
+                                    docker build \
+                                    --build-arg TMDB_V3_API_KEY=${TMDB_API_KEY} \
+                                    -t netflix .
+                                """
+                            }
+                        }
+                    }
+                    
                 }
+            }
+        }
+
+        stage("Docker image push") {
+            steps{
+                dir('Application-Code') {
+                    script{
+                       withDockerRegistry(credentialsId: 'docker', toolName: 'docker'){   
+                           sh "docker tag netflix prasannapandugula1/netflix:latest "
+                           sh "docker push prasannapandugula1/netflix:latest "
+                        }
+                    }
+                }
+            }
+        }
+
+        stage("TRIVY Image Scan"){
+            steps{
+                sh "trivy image prasannapandugula1/netflix:latest > trivyimage.txt" 
             }
         }
     }
