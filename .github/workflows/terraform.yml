@@ -11,7 +11,7 @@ on:
             options:
                 - plan
                 - apply
-                - destory
+                - destroy
 jobs:
   infrastructure-setup-using-terraform:
     name: Terraform ${{ github.event.inputs.actions }}
@@ -64,6 +64,6 @@ jobs:
         if: ${{ github.event.inputs.actions == 'apply' }}
         run: terraform apply -auto-approve
 
-      - name: Terraform destory 
-        if: ${{ github.event.inputs.actions == 'destory' }}
-        run: terraform destory -auto-approve
+      - name: Terraform destroy 
+        if: ${{ github.event.inputs.actions == 'destroy' }}
+        run: terraform destroy -auto-approve
