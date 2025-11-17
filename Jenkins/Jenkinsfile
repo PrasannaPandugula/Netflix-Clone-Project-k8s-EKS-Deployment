@@ -112,5 +112,33 @@ pipeline{
                 sh "trivy image prasannapandugula1/netflix:latest > trivyimage.txt" 
             }
         }
+
+        stage("Deploy to Kunernetes") {
+            steps {
+                script {
+                    dir('Kubernetes') {
+                        withKubeConfig(credentialsId: 'k8s') {
+                            sh 'kubectl apply -f deployment.yml'
+                            sh 'kubectl apply -f service.yml'
+                            sh 'kubectl get all svc'
+                            sh 'kubectl get all'
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    post {
+         success {
+            mail to: 'prasanna3174@gmail.com',
+                 subject: "SUCCESS: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
+                 body: "Good news! The build succeeded.\nCheck it here: ${env.BUILD_URL}"
+        }
+        failure {
+            mail to: 'prasanna3174@gmail.com',
+                 subject: "FAILURE: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
+                 body: "The build failed.\nCheck details: ${env.BUILD_URL}"
+        }
     }
 }
