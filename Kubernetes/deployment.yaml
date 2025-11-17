@@ -1,6 +1,6 @@
 apiVersion: apps/v1
 kind: Deployment
-metaData: 
+metadata: 
   name: netflix-app
   labels:
     name: netflix-app
@@ -10,7 +10,7 @@ spec:
     matchLabels:
       app: netflix-app
   template:
-    metaData:
+    metadata:
       labels:
         app: netflix-app
     spec:
