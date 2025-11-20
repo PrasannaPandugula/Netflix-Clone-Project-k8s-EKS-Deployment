@@ -1,4 +1,4 @@
-Just my one click deployed Netflix clone app into unmanaged Kubernetes cluster
+Just by one click deployed Netflix clone app into unmanaged Kubernetes cluster
 
 #1. AWS infrastructure provisioning is done using Terraform.
 
