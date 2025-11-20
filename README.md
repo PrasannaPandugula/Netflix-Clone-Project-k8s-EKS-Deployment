@@ -1,14 +1,23 @@
 Just my one click deployed Netflix clone app into unmanaged Kubernetes cluster
 
 #1. Infrastructure provisioning used Terraform.
+
 #2. Written Github actions to run Terraform script.
+
 #3. Created DevSecOps pipeline using Jenkins.
+
 #4. Trivy to scan docker images.
+
 #5. OWAPS dependency check for security vulnerabilities.
+
 #6. SonarQube for bugs, security vulnerabilities, and code quality issues.
+
 #7. Quality Gate to determines whether code meets required quality standards before it can be released.
+
 #8. Kubernetes to manage and orchestrate containerized workloads.
+
 #9. Prometheus collects and stores metrics.
+
 #10. Grafana visualizes those metrics through dashboards for monitoring systems.
 
 <img width="982" height="568" alt="image" src="https://github.com/user-attachments/assets/c1bda68c-0498-4c29-a2eb-e560289b476d" />
